@@ -20,7 +20,8 @@ public class EmployeeRepository implements Repository<Employee> {
         try(Statement stmt = getConnection().createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Employee");){
             while (rs.next()){
-                createEmployee(rs);
+                Employee e = createEmployee(rs);
+                employees.add(e);
             }
         }
         return employees;
@@ -30,18 +31,36 @@ public class EmployeeRepository implements Repository<Employee> {
 
     @Override
     public Employee getById(Integer id) throws SQLException {
+        Employee employee = null;
         try(Statement stmt = getConnection().prepareStatement("SELECT * FROM Employee WHERE id = ?");){
             ((PreparedStatement) stmt).setInt(1, id);
+
+            try(ResultSet rs = ((PreparedStatement) stmt).executeQuery();){
+                if(rs.next()){
+                    employee = createEmployee(rs);
+                }
+            }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return employee;
     }
 
     @Override
-    public void save(Employee employee) {
+    public void save(Employee employee) throws SQLException {
+        String sql = "INSERT INTO Employee (first_name, pa_surname, ma_surname, email, salary) VALUES (?, ?, ?, ?, ?)";
+        try(Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);){
+            stmt.setString(1, employee.getFirst_name());
+            stmt.setString(2, employee.getPa_surname());
+            stmt.setString(3, employee.getMa_surname());
+            stmt.setString(4, employee.getEmail());
+            stmt.setFloat(5, employee.getSalary());
 
+            stmt.executeUpdate();
+
+        }
     }
 
     @Override

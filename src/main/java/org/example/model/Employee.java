@@ -11,8 +11,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Integer id, String first_name, String pa_surname, String ma_surname, String email, Float salary) {
-        this.id = id;
+    public Employee(String first_name, String pa_surname, String ma_surname, String email, Float salary) {
         this.first_name = first_name;
         this.pa_surname = pa_surname;
         this.ma_surname = ma_surname;
@@ -70,13 +69,12 @@ public class Employee {
 
     @Override
     public String toString() {
-            return "Employee{" +
-                    "id=" + id +
-                    ", first_name='" + first_name + '\'' +
-                    ", pa_surname='" + pa_surname + '\'' +
-                    ", ma_surname='" + ma_surname + '\'' +
-                    ", email='" + email + '\'' +
-                    ", salary=" + salary +
-                    '}';
+            return
+                    "  id=" + id + '\'' + '\t' +
+                    "- first_name='" + first_name + '\'' + '\t' +
+                    "- pa_surname='" + pa_surname + '\'' + '\t' +
+                    "- ma_surname='" + ma_surname + '\'' + '\t' +
+                    "- email='" + email + '\'' + '\t' +
+                    "- salary=" + salary;
     }
 }

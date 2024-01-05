@@ -1,31 +1,32 @@
 package org.example;
 
 
+import org.example.model.Employee;
+import org.example.repository.EmployeeRepository;
+import org.example.repository.Repository;
 import org.example.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM Employee");) {
+        try (Connection conn = DatabaseConnection.getConnection();) {
+            Repository<Employee> repository = new EmployeeRepository();
 
-            while (rs.next()) {
-                System.out.println(rs.getInt("id") + "\t" +
-                        rs.getString("first_name") + "\t" +
-                        rs.getString("pa_surname") + "\t" +
-                        rs.getString("ma_surname") + "\t" +
-                        rs.getString("email") + "\t" +
-                        rs.getFloat("salary"));
-            }
+//            Employee employee = new Employee("Juan", "Perez", "Gomez", "juan@gmail.com", 1000.0f);
+//
+//            repository.save(employee);
+
+
+//        repository.findAll().forEach(System.out::println);
+//            System.out.println(repository.getById(2));
 
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error: " + e.getMessage());
+            throw new RuntimeException(e);
         }
 
     }
