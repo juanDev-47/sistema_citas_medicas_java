@@ -8,8 +8,8 @@ public interface Repository <T>{
     List<T> findAll() throws Exception;
     T getById(Integer id) throws Exception;
     void save(T t) throws Exception;
-    void update(T t);
-    void delete(Integer id);
+    void update(T t) throws Exception;
+    void delete(Integer id) throws Exception;
 
 
 }

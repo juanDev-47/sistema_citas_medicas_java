@@ -64,12 +64,21 @@ public class EmployeeRepository implements Repository<Employee> {
     }
 
     @Override
-    public void update(Employee employee) {
+    public void update(Employee employee) throws SQLException{
 
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws SQLException {
+        String sql = "DELETE FROM Employee where id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);){
+            stmt.setInt(1, id);
+
+            stmt.executeUpdate();
+        }
+
+
 
     }
 
